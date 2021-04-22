@@ -1,8 +1,8 @@
 # Title:         Powershell Reverse Shell Windows
-# Description:   Creates a reverse shell on Windows and connects back to attacker through Powershell
-# Author:        0dyss3us (KeenanV) ** modified by heywoodlh
+# Description:   Creates a reverse shell on Windows and connects back to attacker via a binary
+# Author:        heywoodlh
 # Props:
-# Version:       1.4
+# Version:       1.5
 # Category:      Remote Access
 # Target:        Windows 10
 # Attackmodes:   HID, Storage
