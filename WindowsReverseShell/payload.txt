@@ -1,8 +1,8 @@
-# Title:         NetCat Reverse Shell Windows
-# Description:   Creates a reverse shell on Windows and connects back to attacker through NetCat
+# Title:         Powershell Reverse Shell Windows
+# Description:   Creates a reverse shell on Windows and connects back to attacker through Powershell
 # Author:        0dyss3us (KeenanV) ** modified by heywoodlh
 # Props:
-# Version:       1.3
+# Version:       1.4
 # Category:      Remote Access
 # Target:        Windows 10
 # Attackmodes:   HID, Storage

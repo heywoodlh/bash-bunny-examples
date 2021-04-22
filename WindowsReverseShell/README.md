@@ -1,7 +1,7 @@
 # Windows Persistent Reverse Shell for Bash Bunny
 
 * Author: 0dyss3us (KeenanV) ** modified by heywoodlh
-* Version: 1.3
+* Version: 1.4
 
 ## Description
 
